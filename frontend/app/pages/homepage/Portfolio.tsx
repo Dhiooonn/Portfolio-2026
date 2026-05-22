@@ -6,10 +6,23 @@ import Badge from "../../components/ui/BadgeSection";
 import Card from "../../components/ui/CardPortfolio";
 import Button from "../../components/ui/Button";
 import { motion } from "framer-motion";
-import { projectsData } from "@/data/projects";
+import { urlFor } from "@/lib/sanity";
 
-export default function Portfolio() {
-  const projects = projectsData.slice(0, 6);
+interface Project {
+  _id: string;
+  title: string;
+  slug: string;
+  category?: string;
+  year?: string;
+  thumbnail?: any;
+}
+
+interface PortfolioProps {
+  projects?: Project[];
+}
+
+export default function Portfolio({ projects = [] }: PortfolioProps) {
+  const displayedProjects = projects.slice(0, 6);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -55,13 +68,14 @@ export default function Portfolio() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16 lg:gap-y-24 mb-20"
         >
-          {projects.map((project, index) => (
-            <motion.div key={index} variants={itemVariants}>
+          {displayedProjects.map((project, idx) => (
+            <motion.div key={project._id || idx} variants={itemVariants}>
               <Card
-                index={project.index}
+                index={(idx + 1).toString().padStart(2, "0")}
                 title={project.title}
-                category={project.category}
-                year={project.year}
+                category={project.category || "Project"}
+                year={project.year || ""}
+                imageSrc={project.thumbnail ? urlFor(project.thumbnail).url() : undefined}
                 href={`/portfolio/${project.slug}`}
               />
             </motion.div>

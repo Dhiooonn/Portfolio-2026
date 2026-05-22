@@ -5,8 +5,16 @@ import Services from "./pages/homepage/Services";
 import Experience from "./pages/homepage/Experience";
 import Portfolio from "./pages/homepage/Portfolio";
 import Footer from "./components/layouts/Footer";
+import { client } from "@/lib/sanity";
+import { experiencesQuery } from "@/lib/queries/experience";
+import { projectsQuery } from "@/lib/queries/projects";
 
-export default function Home() {
+export default async function Home() {
+  const [experiences, projects] = await Promise.all([
+    client.fetch(experiencesQuery),
+    client.fetch(projectsQuery),
+  ]);
+
   return (
     <>
       <Navbar />
@@ -14,10 +22,11 @@ export default function Home() {
         <Hero />
         <Stats />
         <Services />
-        <Experience />
-        <Portfolio />
+        <Experience experiences={experiences} />
+        <Portfolio projects={projects} />
       </main>
       <Footer />
     </>
   );
 }
+

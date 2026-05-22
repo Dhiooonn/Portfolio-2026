@@ -24,7 +24,7 @@ export default function CardService({
     <div
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className={`group p-8 md:p-10 rounded-[24px] h-[300px] flex flex-col justify-between relative overflow-hidden transition-all duration-500 cursor-pointer border border-dark-brand/5 shadow-xs select-none ${
+      className={`group p-8 md:p-10 rounded-[24px] flex flex-col justify-between relative overflow-hidden transition-all duration-500 cursor-pointer border border-dark-brand/5 shadow-xs select-none ${
         isActive
           ? "bg-dark-brand text-white-brand"
           : "bg-[#f5f5f5] text-dark-brand"

@@ -4,10 +4,13 @@ import React from "react";
 import Container from "../../components/ui/Container";
 import Badge from "../../components/ui/BadgeSection";
 import { motion } from "framer-motion";
-import { experiencesData } from "@/data/experience";
+import { ExperienceItem } from "@/data/experience";
 
-export default function Experience() {
-  const experiences = experiencesData;
+interface ExperienceProps {
+  experiences?: ExperienceItem[];
+}
+
+export default function Experience({ experiences = [] }: ExperienceProps) {
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -67,10 +70,17 @@ export default function Experience() {
                 <h3 className="text-card-title font-mori font-medium text-text-primary leading-snug">
                   {exp.title}
                 </h3>
+                {(exp.company || exp.employmentType) && (
+                  <div className="text-[14px] text-text-primary/80 font-medium mt-1">
+                    {exp.company}
+                    {exp.company && exp.employmentType && " · "}
+                    {exp.employmentType}
+                  </div>
+                )}
                 <span className="text-[14px] text-text-secondary font-normal mt-1 mb-3 block">
                   {exp.duration}
                 </span>
-                <p className="text-[14px] md:text-body text-text-secondary leading-relaxed max-w-2xl">
+                <p className="text-[14px] md:text-body text-text-secondary leading-relaxed max-w-full whitespace-pre-line">
                   {exp.description}
                 </p>
               </div>
