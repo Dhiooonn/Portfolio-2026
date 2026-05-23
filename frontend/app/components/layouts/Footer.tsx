@@ -31,7 +31,9 @@ export default function Footer() {
               variant="secondary"
               as="a"
               className="rounded-full font-mori font-medium text-[14px]"
-              href="mailto:diondaman51@gmail.com"
+              href="https://wa.me/62895422528428"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Contact Us
             </Button>
@@ -67,7 +69,7 @@ export default function Footer() {
                 <InstagramIcon size={20} />
               </a>
               <a
-                href="https://wa.me/628954225284282"
+                href="https://wa.me/62895422528428"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white-brand/60 hover:text-white-brand transition-colors duration-300"
@@ -107,10 +109,10 @@ export default function Footer() {
                   Phone Number
                 </span>
                 <a
-                  href="tel:+628954225284282"
+                  href="tel:+62895422528428"
                   className="text-[14px] text-white-brand/60 hover:text-white-brand transition-colors duration-300 font-mori"
                 >
-                  +62 89542 252 84282
+                  +62 895 4225 28428
                 </a>
               </div>
             </div>

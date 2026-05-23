@@ -38,27 +38,31 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 h-20 flex items-center ${
-        isScrolled
-          ? "bg-bg-brand/85 backdrop-blur-md"
-          : "bg-transparent"
+        isScrolled ? "bg-bg-brand/85 backdrop-blur-md" : "bg-transparent"
       }`}
     >
       <Container className="flex items-center justify-between">
         {/* Logo */}
-        <a href="#" className="text-card-title font-mori font-bold tracking-tight text-text-primary">
+        <a
+          href="#"
+          className="text-card-title font-mori font-bold tracking-tight text-text-primary"
+        >
           Dhion<span className="text-text-secondary">.</span>
         </a>
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center gap-10">
           {navLinks.map((link) => {
-            const isActive = link.href === "/portfolio" ? pathname === "/portfolio" : false;
+            const isActive =
+              link.href === "/portfolio" ? pathname === "/portfolio" : false;
             return (
               <a
                 key={link.name}
                 href={link.href}
                 className={`text-body font-medium transition-colors duration-300 relative group ${
-                  isActive ? "text-text-primary" : "text-text-secondary hover:text-text-primary"
+                  isActive
+                    ? "text-text-primary"
+                    : "text-text-secondary hover:text-text-primary"
                 }`}
               >
                 {link.name}
@@ -74,7 +78,14 @@ export default function Navbar() {
 
         {/* Contact CTA */}
         <div className="hidden md:block">
-          <Button variant="outline" href="#contact" as="a" className="px-6 py-2.5">
+          <Button
+            variant="outline"
+            href="https://wa.me/62895422528428"
+            target="_blank"
+            rel="noopener noreferrer"
+            as="a"
+            className="px-6 py-2.5"
+          >
             Contact Us
           </Button>
         </div>
@@ -101,14 +112,19 @@ export default function Navbar() {
           >
             <div className="px-6 py-8 flex flex-col gap-6">
               {navLinks.map((link) => {
-                const isActive = link.href === "/portfolio" ? pathname === "/portfolio" : false;
+                const isActive =
+                  link.href === "/portfolio"
+                    ? pathname === "/portfolio"
+                    : false;
                 return (
                   <a
                     key={link.name}
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`text-card-title font-medium transition-colors duration-300 ${
-                      isActive ? "text-text-primary font-bold" : "text-text-secondary hover:text-text-primary"
+                      isActive
+                        ? "text-text-primary font-bold"
+                        : "text-text-secondary hover:text-text-primary"
                     }`}
                   >
                     {link.name}
@@ -118,7 +134,9 @@ export default function Navbar() {
               <div className="pt-4 border-t border-border-brand/20">
                 <Button
                   variant="outline"
-                  href="#contact"
+                  href="https://wa.me/62895422528428"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   as="a"
                   className="w-full"
                   onClick={() => setMobileMenuOpen(false)}

@@ -9,6 +9,8 @@ interface ButtonProps extends Omit<HTMLMotionProps<"button">, "className"> {
   className?: string;
   as?: "button" | "a";
   href?: string;
+  target?: string;
+  rel?: string;
 }
 
 export default function Button({

@@ -43,7 +43,10 @@ export default function Hero() {
   };
 
   return (
-    <section className="min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+    <section
+      id="personal"
+      className="min-h-screen flex items-center pt-24 pb-16 overflow-hidden"
+    >
       <Container>
         <motion.div
           variants={containerVariants}
@@ -58,7 +61,9 @@ export default function Hero() {
               variants={textVariants}
               className="text-hero font-mori font-medium tracking-tight text-text-primary leading-[0.9] flex flex-col"
             >
-              <span>FRONTEND <br className="block md:hidden" /> DEVELOPER</span>
+              <span>
+                FRONTEND <br className="block md:hidden" /> DEVELOPER
+              </span>
               <span>
                 UI/UX <br /> DESIGNER
               </span>
@@ -77,6 +82,7 @@ export default function Hero() {
                 alt="Dhion - UI/UX Designer & Frontend Developer"
                 fill
                 priority
+                quality={90}
                 sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover hover:scale-105 transition-transform duration-700 rounded-lg"
               />
