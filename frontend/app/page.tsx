@@ -9,6 +9,8 @@ import { client } from "@/lib/sanity";
 import { experiencesQuery } from "@/lib/queries/experience";
 import { projectsQuery } from "@/lib/queries/projects";
 
+export const revalidate = 0;
+
 export default async function Home() {
   const [experiences, projects] = await Promise.all([
     client.fetch(experiencesQuery),
