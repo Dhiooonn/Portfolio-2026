@@ -22,7 +22,7 @@ interface PortfolioProps {
 }
 
 export default function Portfolio({ projects = [] }: PortfolioProps) {
-  const displayedProjects = projects.slice(0, 6);
+  const displayedProjects = projects.slice(0, 4);
 
   const containerVariants = {
     hidden: { opacity: 0 },

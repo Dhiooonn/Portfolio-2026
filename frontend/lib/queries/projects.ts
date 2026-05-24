@@ -26,6 +26,7 @@ export const projectBySlugQuery = defineQuery(`
     techStack,
     github,
     demo,
+    gallery,
     featured,
     category,
     year

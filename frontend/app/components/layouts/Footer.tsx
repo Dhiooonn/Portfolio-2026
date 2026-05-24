@@ -60,7 +60,7 @@ export default function Footer() {
             {/* Social Icons (Instagram, WhatsApp, LinkedIn) */}
             <div className="flex items-center gap-4 mt-8 lg:mt-0">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/dhioonnn/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white-brand/60 hover:text-white-brand transition-colors duration-300"
@@ -78,7 +78,7 @@ export default function Footer() {
                 <WhatsappIcon size={20} />
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/dhion-nur-damanhuri-2bb863275/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white-brand/60 hover:text-white-brand transition-colors duration-300"

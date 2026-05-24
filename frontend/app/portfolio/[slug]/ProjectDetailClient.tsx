@@ -19,6 +19,7 @@ interface Project {
   techStack?: string[];
   github?: string;
   demo?: string;
+  gallery?: any[];
 }
 
 interface ProjectDetailClientProps {
@@ -44,7 +45,11 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
     },
   };
 
-  const imageUrl = project.thumbnail ? urlFor(project.thumbnail).url() : null;
+  const frame1Url = project.gallery && project.gallery[0]?.asset ? urlFor(project.gallery[0]).url() : null;
+  const frame2Url = project.gallery && project.gallery[1]?.asset ? urlFor(project.gallery[1]).url() : null;
+  const showcaseUrl = project.gallery && project.gallery[2]?.asset
+    ? urlFor(project.gallery[2]).url()
+    : (project.thumbnail ? urlFor(project.thumbnail).url() : null);
 
   return (
     <div className="w-full">
@@ -138,13 +143,37 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
           className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full"
         >
           <div className="relative w-full aspect-[4/3] bg-card-bg overflow-hidden flex flex-col justify-end p-8 border-t border-b border-border-brand/20 md:border-r group">
-            <div className="absolute inset-0 bg-border-brand/5 flex items-center justify-center text-text-secondary/70 font-mori text-sm font-semibold select-none group-hover:scale-102 transition-transform duration-700">
-              Concept Frame 1
+            <div className="absolute inset-0 bg-border-brand/5 flex items-center justify-center font-mori overflow-hidden">
+              {frame1Url ? (
+                <Image
+                  src={frame1Url}
+                  alt={`${project.title} - Concept Frame 1`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-102 transition-transform duration-700"
+                />
+              ) : (
+                <span className="text-text-secondary/70 text-sm font-semibold select-none group-hover:scale-102 transition-transform duration-700">
+                  Concept Frame 1
+                </span>
+              )}
             </div>
           </div>
           <div className="relative w-full aspect-[4/3] bg-card-bg overflow-hidden flex flex-col justify-end p-8 border-b border-border-brand/20 md:border-t group">
-            <div className="absolute inset-0 bg-border-brand/5 flex items-center justify-center text-text-secondary/70 font-mori text-sm font-semibold select-none group-hover:scale-102 transition-transform duration-700">
-              Concept Frame 2
+            <div className="absolute inset-0 bg-border-brand/5 flex items-center justify-center font-mori overflow-hidden">
+              {frame2Url ? (
+                <Image
+                  src={frame2Url}
+                  alt={`${project.title} - Concept Frame 2`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover group-hover:scale-102 transition-transform duration-700"
+                />
+              ) : (
+                <span className="text-text-secondary/70 text-sm font-semibold select-none group-hover:scale-102 transition-transform duration-700">
+                  Concept Frame 2
+                </span>
+              )}
             </div>
           </div>
         </motion.div>
@@ -153,10 +182,10 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
         <motion.div variants={itemVariants} className="w-full">
           <div className="relative w-full aspect-[16/9] bg-card-bg overflow-hidden flex flex-col justify-end group">
             <div className="absolute inset-0 bg-border-brand/5 flex items-center justify-center font-mori overflow-hidden">
-              {imageUrl ? (
+              {showcaseUrl ? (
                 <Image
-                  src={imageUrl}
-                  alt={project.title}
+                  src={showcaseUrl}
+                  alt={`${project.title} - Showcase`}
                   fill
                   sizes="100vw"
                   className="object-cover group-hover:scale-102 transition-transform duration-700"
