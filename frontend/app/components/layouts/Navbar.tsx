@@ -33,6 +33,7 @@ export default function Navbar() {
     { name: "Services", href: isHomepage ? "#services" : "/#services" },
     { name: "Experience", href: isHomepage ? "#experience" : "/#experience" },
     { name: "Portfolio", href: "/portfolio" },
+    { name: "Certificate", href: "https://drive.google.com/drive/folders/1sjV2fh0T2FdIVkg_R6__dipTwwPkNDUw?usp=sharing", external: true },
   ];
 
   return (
@@ -59,6 +60,8 @@ export default function Navbar() {
               <a
                 key={link.name}
                 href={link.href}
+                target={link.external ? "_blank" : undefined}
+                rel={link.external ? "noopener noreferrer" : undefined}
                 className={`text-body font-medium transition-colors duration-300 relative group ${
                   isActive
                     ? "text-text-primary"
@@ -120,6 +123,8 @@ export default function Navbar() {
                   <a
                     key={link.name}
                     href={link.href}
+                    target={link.external ? "_blank" : undefined}
+                    rel={link.external ? "noopener noreferrer" : undefined}
                     onClick={() => setMobileMenuOpen(false)}
                     className={`text-card-title font-medium transition-colors duration-300 ${
                       isActive

@@ -13,7 +13,7 @@ function AnimatedCounter({ value }: { value: number }) {
     stiffness: 80,
     restDelta: 0.001,
   });
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "0px" });
 
   useEffect(() => {
     if (isInView) {
@@ -32,24 +32,25 @@ function AnimatedCounter({ value }: { value: number }) {
   return <span ref={ref}>0</span>;
 }
 
-export default function Stats() {
+export default function Stats({ projectCount = 0 }: { projectCount?: number }) {
   const statsData = [
     {
-      value: 100,
-      prefix: "+",
+      value: projectCount,
+      prefix: "",
       label: "Projects",
       description:
         "Successfully delivered high-quality design and frontend solutions globally.",
     },
     {
-      value: 100,
-      prefix: "+",
+      value: 8,
+      prefix: "",
       label: "Clients",
       description: "Collaborated with diverse startups and established brands.",
     },
     {
       value: 100,
-      prefix: "+",
+      prefix: "",
+      suffix: "%",
       label: "Iterations",
       description:
         "Obsessed with minor details to craft pixel-perfect digital assets.",
@@ -82,7 +83,7 @@ export default function Stats() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "0px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
           className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-end mb-20"
         >
@@ -104,7 +105,7 @@ export default function Stats() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "0px" }}
           className="flex flex-col md:flex-row md:justify-between gap-12 md:gap-16 lg:gap-24"
         >
           {statsData.map((stat, index) => (
@@ -116,6 +117,7 @@ export default function Stats() {
               <span className="text-hero font-mori font-bold tracking-tight text-text-primary leading-none">
                 {stat.prefix}
                 <AnimatedCounter value={stat.value} />
+                {(stat as any).suffix}
               </span>
               <div className="flex flex-col gap-2">
                 <p className="text-sm text-text-secondary leading-relaxed">

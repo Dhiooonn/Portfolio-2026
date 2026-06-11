@@ -22,7 +22,7 @@ export default async function Home() {
       <Navbar />
       <main className="flex-grow">
         <Hero />
-        <Stats />
+        <Stats projectCount={projects.length} />
         <Services />
         <Experience experiences={experiences} />
         <Portfolio projects={projects} />
