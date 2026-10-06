@@ -107,7 +107,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
 
           {/* Description & Links column */}
           <div className="lg:col-span-5">
-            <p className="text-sm md:text-body text-text-secondary leading-relaxed mb-8">
+            <p className="text-sm md:text-body text-text-secondary leading-relaxed mb-8 whitespace-pre-line">
               {project.description ||
                 "A custom digital experience crafted using precise design principles and robust engineering to deliver a responsive, performant interface."}
             </p>
