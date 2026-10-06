@@ -15,6 +15,8 @@ interface Project {
   category?: string;
   year?: string;
   thumbnail?: any;
+  coverType?: string;
+  videoUrl?: string;
 }
 
 interface PortfolioProps {
@@ -76,6 +78,8 @@ export default function Portfolio({ projects = [] }: PortfolioProps) {
                 category={project.category || "Project"}
                 year={project.year || ""}
                 imageSrc={project.thumbnail ? urlFor(project.thumbnail).url() : undefined}
+                videoSrc={project.videoUrl}
+                coverType={project.coverType}
                 href={`/portfolio/${project.slug}`}
               />
             </motion.div>

@@ -16,6 +16,8 @@ interface Project {
   year?: string;
   description?: string;
   thumbnail?: any;
+  coverType?: string;
+  videoUrl?: string;
   techStack?: string[];
   github?: string;
   demo?: string;
@@ -45,11 +47,27 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
     },
   };
 
-  const frame1Url = project.gallery && project.gallery[0]?.asset ? urlFor(project.gallery[0]).url() : null;
-  const frame2Url = project.gallery && project.gallery[1]?.asset ? urlFor(project.gallery[1]).url() : null;
-  const showcaseUrl = project.gallery && project.gallery[2]?.asset
-    ? urlFor(project.gallery[2]).url()
-    : (project.thumbnail ? urlFor(project.thumbnail).url() : null);
+  // Prepare gallery items array matching 3 Instagram Feed posts (aspect 4:5)
+  const rawGallery = project.gallery || [];
+
+  const galleryItems = Array.from({ length: 3 }).map((_, idx) => {
+    const item = rawGallery[idx];
+    const itemUrl = item?.asset ? urlFor(item).url() : null;
+
+    // First card can be the cover video if coverType === "video"
+    const isVideo = idx === 0 && project.coverType === "video" && !!project.videoUrl;
+    
+    // Fallback logic for media url
+    const fallbackUrl = project.thumbnail ? urlFor(project.thumbnail).url() : null;
+    const mediaUrl = itemUrl || (idx === 0 ? fallbackUrl : null);
+
+    return {
+      id: idx,
+      url: mediaUrl,
+      isVideo,
+      videoUrl: project.videoUrl,
+    };
+  });
 
   return (
     <div className="w-full">
@@ -63,7 +81,7 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
         </div>
 
         {/* Project Details Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start mb-24 font-mori">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start mb-20 font-mori">
           {/* Tech Stack column */}
           <div className="lg:col-span-7">
             <h2 className="text-body font-semibold text-text-primary mb-4 select-none">
@@ -129,77 +147,47 @@ export default function ProjectDetailClient({ project }: ProjectDetailClientProp
         </div>
       </Container>
 
-      {/* Premium Gallery / Mockup Section - Full Width, No Gap, Touching */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-100px" }}
-        className="flex flex-col w-full"
-      >
-        {/* Row 1: Dual column screen previews */}
+      {/* Instagram Feed Style Gallery Grid (3 Columns, 4:5 Aspect Ratio, No Border, No Label) */}
+      <Container className="mb-24">
         <motion.div
-          variants={itemVariants}
-          className="grid grid-cols-1 md:grid-cols-2 gap-0 w-full"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 w-full"
         >
-          <div className="relative w-full aspect-[4/3] bg-card-bg overflow-hidden flex flex-col justify-end p-8 border-t border-b border-border-brand/20 md:border-r group">
-            <div className="absolute inset-0 bg-border-brand/5 flex items-center justify-center font-mori overflow-hidden">
-              {frame1Url ? (
-                <Image
-                  src={frame1Url}
-                  alt={`${project.title} - Concept Frame 1`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover group-hover:scale-102 transition-transform duration-700"
-                />
-              ) : (
-                <span className="text-text-secondary/70 text-sm font-semibold select-none group-hover:scale-102 transition-transform duration-700">
-                  Concept Frame 1
-                </span>
-              )}
-            </div>
-          </div>
-          <div className="relative w-full aspect-[4/3] bg-card-bg overflow-hidden flex flex-col justify-end p-8 border-b border-border-brand/20 md:border-t group">
-            <div className="absolute inset-0 bg-border-brand/5 flex items-center justify-center font-mori overflow-hidden">
-              {frame2Url ? (
-                <Image
-                  src={frame2Url}
-                  alt={`${project.title} - Concept Frame 2`}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover group-hover:scale-102 transition-transform duration-700"
-                />
-              ) : (
-                <span className="text-text-secondary/70 text-sm font-semibold select-none group-hover:scale-102 transition-transform duration-700">
-                  Concept Frame 2
-                </span>
-              )}
-            </div>
-          </div>
+          {galleryItems.map((item) => (
+            <motion.div key={item.id} variants={itemVariants} className="flex flex-col">
+              {/* Instagram Feed Card Box (4:5 Aspect Ratio, No Border) */}
+              <div className="relative w-full aspect-[4/5] bg-card-bg rounded-lg overflow-hidden group cursor-pointer">
+                {item.isVideo && item.videoUrl ? (
+                  <video
+                    src={item.videoUrl}
+                    poster={item.url || undefined}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                ) : item.url ? (
+                  <Image
+                    src={item.url}
+                    alt={`${project.title} - Frame ${item.id + 1}`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-border-brand/10 flex items-center justify-center text-text-secondary/60 text-xs font-mori select-none">
+                    No Media Frame
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
-
-        {/* Row 2: Premium Single Full Width Image (like Row 1 but 1 column) */}
-        <motion.div variants={itemVariants} className="w-full">
-          <div className="relative w-full aspect-[16/9] bg-card-bg overflow-hidden flex flex-col justify-end group">
-            <div className="absolute inset-0 bg-border-brand/5 flex items-center justify-center font-mori overflow-hidden">
-              {showcaseUrl ? (
-                <Image
-                  src={showcaseUrl}
-                  alt={`${project.title} - Showcase`}
-                  fill
-                  sizes="100vw"
-                  className="object-cover group-hover:scale-102 transition-transform duration-700"
-                  priority
-                />
-              ) : (
-                <span className="text-text-secondary/60 text-sm font-semibold select-none">
-                  Preview Canvas Showcase
-                </span>
-              )}
-            </div>
-          </div>
-        </motion.div>
-      </motion.div>
+      </Container>
     </div>
   );
 }

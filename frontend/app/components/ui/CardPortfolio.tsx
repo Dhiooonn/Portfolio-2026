@@ -9,6 +9,8 @@ interface CardProps {
   category: string;
   year: string;
   imageSrc?: string;
+  videoSrc?: string;
+  coverType?: "image" | "video" | string;
   href?: string;
 }
 
@@ -18,13 +20,27 @@ export default function Card({
   category,
   year,
   imageSrc,
+  videoSrc,
+  coverType,
   href = "#",
 }: CardProps) {
+  const isVideo = (coverType === "video" || (!coverType && !!videoSrc)) && !!videoSrc;
+
   return (
     <a href={href} className="group block w-full">
       {/* Thumbnail */}
       <div className="relative w-full aspect-[4/3] bg-card-bg rounded-image overflow-hidden mb-6">
-        {imageSrc ? (
+        {isVideo ? (
+          <video
+            src={videoSrc}
+            poster={imageSrc}
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          />
+        ) : imageSrc ? (
           <Image
             src={imageSrc}
             alt={title}
@@ -34,7 +50,7 @@ export default function Card({
           />
         ) : (
           <div className="w-full h-full bg-border-brand/20 flex items-center justify-center text-text-secondary font-mori">
-            No Image
+            No Media
           </div>
         )}
       </div>
